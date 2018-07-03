@@ -26,7 +26,7 @@ class Perceptron:
     def backward(self, label):
         loss = (label - self.prediction) ** 2   # Squared Error
         delta = 2 * (label - self.prediction) * self.sigmoid(self.prediction, derivative=True)  # Output delta
-        self.wGradients += self.inputs.dot(delta).reshape(self.numInputs, 1)                  # Changes to be ade to weights
+        self.wGradients += self.inputs.dot(delta).reshape(self.numInputs, 1)                    # Changes to be made to weights
         self.bGradient += delta[0]     # Change to be made to bias - (1,1) matrix -> single digit
         return loss
 
