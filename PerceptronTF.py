@@ -3,12 +3,6 @@ import tensorflow as tf
 
 import Data
 
-inputs, labels = [], []
-for i in range(Data.data_set_size):
-    input = np.random.uniform(-10, 10, Data.num_inputs)
-    inputs.append([input])
-    labels.append([(np.sum(input) > 0).astype(int)])
-
 x = tf.placeholder(tf.float32, [1, Data.num_inputs])
 y = tf.placeholder(tf.float32, [1])
 
@@ -27,11 +21,11 @@ with tf.Session() as session:
     for i in range(Data.num_epochs):
         epoch_loss = 0
         epoch_correct = []
-        for j in range(len(inputs)):
-            _, l, pred, label = session.run([train, loss, prediction, y], {x: inputs[j], y: labels[j]})
+        for j in range(len(Data.inputs)):
+            _, l, pred, label = session.run([train, loss, prediction, y], {x: [Data.inputs[j]], y: [Data.labels[j]]})
             epoch_loss += l
             epoch_correct.append(np.round(pred) == label)
         if i == 0 or (i + 1) % Data.print_step == 0:
             print("Epoch:", i + 1)
-            print("Error:", (epoch_loss / len(inputs)))
-            print("Acc  :", (np.sum(epoch_correct) / len(inputs)) * 100, "%\n")
+            print("Error:", (epoch_loss / len(Data.inputs)))
+            print("Acc  :", (np.sum(epoch_correct) / len(Data.inputs)) * 100, "%\n")
